@@ -6,14 +6,14 @@ A comprehensive knowledge extraction system that converts PDF documents into str
 
 This system implements a complete pipeline for extracting structured knowledge from PDF documents, particularly suited for regulatory documents, standards, and technical specifications. It uses a Logic-Guided Chain-of-Thought (LG-CoT) approach to extract knowledge in First-Order Logic format, which is then mapped to JSON structures and optionally imported into Neo4j knowledge graphs.
 
-```
+
 ## ✨ Highlights
 
-- **端到端流水线**：PDF 解析 → 清洗 → Schema 构建 → FOL 抽取 → 校验 → JSON 输出 →（可选）Neo4j 入库  
-- **LG-CoT 抽取**：面向法规、标准、技术规范等文本，输出可追溯的逻辑表达  
-- **多基线对比**：StandCoT / Random few-shot / Semantic few-shot  
-- **评估与下游**：支持 LLM Expert Evaluation 与 RAG（NaiveRAG vs GraphRAG）对比  
-- **可配置**：所有参数统一在 `config.yaml`
+**端到端流水线**：PDF 解析 → 清洗 → Schema 构建 → FOL 抽取 → 校验 → JSON 输出 →（可选）Neo4j 入库  
+**LG-CoT 抽取**：面向法规、标准、技术规范等文本，输出可追溯的逻辑表达  
+**多基线对比**：StandCoT / Random few-shot / Semantic few-shot  
+**评估与下游**：支持 LLM Expert Evaluation 与 RAG（NaiveRAG vs GraphRAG）对比  
+**可配置**：所有参数统一在 `config.yaml`
 
 ## Installation
 
@@ -68,12 +68,12 @@ llm_api:
 Your project structure includes the "model/MinerU/" directory (for high-quality PDF parsing), but due to the large size of the model, the MinerU model files are not uploaded in this repository. You need to download and install the MinerU model from the official MinerU project to your local machine and place the weights/resources under the "model/MinerU/" directory.
 
 Clone the MinerU repository (please refer to the official MinerU repository page; if the link changes, please search for "MinerU" on GitHub):
-
+```bash
 git clone <MinerU-repo-url> MinerU
-
 mkdir -p model/MinerU
 # Copy the weights/resources downloaded from MinerU to the "model/MinerU" directory.
 cp -r <path_to_mineru_models_or_assets>/* model/MinerU/
+```
 
 
 ### PDF Extractor
@@ -338,5 +338,6 @@ Logs are stored in:
 如有商业用途需求，请提前联系作者获取授权。未经授权不得将本项目用于任何商业目的。
 
 For commercial use, please contact the author for permission. Unauthorized commercial use is prohibited.
+
 
 
