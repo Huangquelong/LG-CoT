@@ -1,0 +1,151 @@
+{
+    "logical_connectives": [
+      {
+        "name": "AND",
+        "symbol": "∧",
+        "description": "逻辑与，表示同时满足多个条件",
+        "examples": [
+          "条件1 AND 条件2",
+          "A ∧ B"
+        ]
+      },
+      {
+        "name": "OR",
+        "symbol": "∨",
+        "description": "逻辑或，表示满足任一条件",
+        "examples": [
+          "条件1 OR 条件2",
+          "A ∨ B"
+        ]
+      },
+      {
+        "name": "NOT",
+        "symbol": "¬",
+        "description": "逻辑非，表示否定",
+        "examples": [
+          "NOT 条件",
+          "¬A"
+        ]
+      },
+      {
+        "name": "IMPLIES",
+        "symbol": "→",
+        "description": "蕴含，表示如果...则...",
+        "examples": [
+          "IF 条件 THEN 结果",
+          "A → B"
+        ]
+      },
+      {
+        "name": "IFF",
+        "symbol": "↔",
+        "description": "当且仅当，表示双向等价",
+        "examples": [
+          "A当且仅当B",
+          "A ↔ B"
+        ]
+      },
+      {
+        "name": "XOR",
+        "symbol": "⊕",
+        "description": "异或，表示有且仅有一个为真",
+        "examples": [
+          "A XOR B",
+          "A ⊕ B"
+        ]
+      },
+      {
+        "name": "FORALL",
+        "symbol": "∀",
+        "description": "全称量词，表示对所有",
+        "examples": [
+          "对所有x",
+          "∀x"
+        ]
+      },
+      {
+        "name": "EXISTS",
+        "symbol": "∃",
+        "description": "存在量词，表示存在",
+        "examples": [
+          "存在x",
+          "∃x"
+        ]
+      }
+    ],
+    "modal_operators": [
+      {
+        "name": "OBLIGATION",
+        "symbol": "O",
+        "description": "义务/应该，表示必须执行的动作",
+        "examples": [
+          "应该",
+          "义务",
+          "应",
+          "应当"
+        ],
+        "patterns": [
+          {
+            "subject_type": "主体",
+            "action": "执行动作",
+            "object_type": "客体"
+          }
+        ]
+      },
+      {
+        "name": "REQUIREMENT",
+        "symbol": "R",
+        "description": "要求/必须，表示强制性的要求",
+        "examples": [
+          "要求",
+          "必须",
+          "需要",
+          "需"
+        ],
+        "patterns": [
+          {
+            "subject_type": "主体",
+            "action": "执行动作",
+            "object_type": "客体"
+          }
+        ]
+      },
+      {
+        "name": "PROHIBITION",
+        "symbol": "P",
+        "description": "禁止/不得，表示不允许执行的动作",
+        "examples": [
+          "禁止",
+          "不得",
+          "不应",
+          "不允许"
+        ],
+        "patterns": [
+          {
+            "subject_type": "主体",
+            "action": "禁止动作",
+            "object_type": "客体"
+          }
+        ]
+      },
+      {
+        "name": "PERMISSION",
+        "symbol": "Perm",
+        "description": "允许/可以，表示允许执行的动作",
+        "examples": [
+          "允许",
+          "可以",
+          "可",
+          "准许"
+        ],
+        "patterns": [
+          {
+            "subject_type": "主体",
+            "action": "允许动作",
+            "object_type": "客体"
+          }
+        ]
+      }
+    ],
+  
+  }

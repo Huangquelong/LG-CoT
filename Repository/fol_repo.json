@@ -1,0 +1,61 @@
+[  {
+    "text": "在验收时，应按照本规范第4.4.2条的规定提交技术文件。",
+    "fol": "AND(Obligation(subject=Party(\"验收方\"), action=\"提交\", object=\"技术文件\"), Condition(desc=\"按照本规范第4.4.2条\"))"
+  },
+  {
+    "text": "居民区和水田中的接地装置，宜围绕杆塔基础敷设成闭合环形。",
+    "fol": "Recommendation(action=敷设(actor=\"施工方\", object=\"接地装置\", location=\"杆塔基础\", shape=\"闭合环形\"), condition=LocationIn(object=\"接地装置\", area=\"居民区或水田\"))"
+  },
+  {
+    "text": "吊装管道时，捆绑钢丝绳必须设置可靠的防滑措施。",
+    "fol": "Obligation(subject=Party(\"吊装人员\"), action=设置(actor=\"吊装人员\", object=\"防滑措施\", purpose=\"防止钢丝绳滑动\"), condition=ActionInProgress(action=\"吊装管道\"))"
+  },
+  {
+    "text": "气体绝缘的电流互感器安装后应进行现场老炼试验。",
+    "fol": "Obligation(subject=Party(\"安装人员\"), action=进行(actor=\"测试人员\", test=\"现场老炼试验\"), condition=AfterAction(action=安装(actor=\"安装人员\", object=\"气体绝缘的电流互感器\")))"
+  },
+  {
+    "text": "伸缩缝处的模板宜采用泡沫板或易拆除的材料。",
+    "fol": "Recommendation(action=采用(actor=\"施工方\", material=\"泡沫板或易拆除材料\", location=\"伸缩缝处\"), condition=Exists(object=\"伸缩缝\"))"
+  },
+  {
+    "text": "升降抱杆过程中，四侧临时拉线应由拉线控制人员根据指挥人命令适时调整。",
+    "fol": "Obligation(subject=Party(\"拉线控制人员\"), action=调整(actor=\"拉线控制人员\", object=\"四侧临时拉线\", condition=\"根据指挥人命令\"), condition=ActionInProgress(action=\"升降抱杆\"))"
+  },
+  {
+    "text": "受力预埋件的锚筋应采用HRB400级或HPB300级钢筋，不应采用冷加工钢筋。",
+    "fol": "AND(Obligation(subject=Party(\"施工方\"), action=使用(actor=\"施工方\", material=\"HRB400级或HPB300级钢筋\", restriction=\"作为锚筋\"), condition=Exists(object=\"受力预埋件\")), Prohibition(subject=Party(\"施工方\"), action=使用(actor=\"施工方\", material=\"冷加工钢筋\", restriction=\"作为锚筋\")))"
+  },
+  {
+    "text": "平台上设备的吊装方式应符合产品技术文件要求。",
+    "fol": "Obligation(subject=Party(\"吊装人员\"), action=符合(actor=\"吊装方式\", requirement=\"产品技术文件要求\"), condition=ActionInProgress(action=\"吊装平台上设备\"))"
+  },
+  {
+    "text": "职业病防护用品、防护器具应定点存放在安全、便于取用的地方，建立台账，并有专人负责保管，按照规定检验、维护、补充和更换。",
+    "fol": "AND(Obligation(subject=Party(\"管理人员\"), action=存放(object=\"职业病防护用品和防护器具\", location=\"安全便于取用的地方\", condition=\"定点\")), Obligation(subject=Party(\"管理人员\"), action=管理(actor=\"专人\", object=\"职业病防护用品和防护器具\", method=\"建立台账、检验、维护、补充和更换\")))"
+  },
+  {
+    "text": "旁路作业工具装备的组接应符合DL/T 825的要求。",
+    "fol": "Obligation(subject=Party(\"作业人员\"), action=符合(actor=\"组接方式\", requirement=\"DL/T 825要求\"), condition=ActionInProgress(action=\"旁路作业工具装备组接\"))"
+  },
+  {
+    "text": "大型钢筋混凝土墙板运输和堆放时，应配备专用托架，采用侧靠立放的方法。构件的存放架应具有足够的抗倾覆性能。",
+    "fol": "AND(Obligation(subject=Party(\"运输人员\"), action=运输(actor=\"运输人员\", object=\"大型钢筋混凝土墙板\", method=\"配备专用托架\")), Obligation(subject=Party(\"堆放人员\"), action=堆放(actor=\"堆放人员\", object=\"大型钢筋混凝土墙板\", method=\"侧靠立放\")), Requirement(object=\"存放架\", property=\"抗倾覆性能\", value=\"足够\"))"
+  },
+  {
+    "text": "除了一般的简图，还应给出所有安全电源的全部详图。该信息内容应附在配电盘上，可以采用单线图。",
+    "fol": "AND(Obligation(subject=Party(\"设计人员\"), action=给出(actor=\"设计人员\", object=\"安全电源详图\", type=\"全部\")), Permission(subject=Party(\"设计人员\"), action=给出(actor=\"设计人员\", object=\"配电盘信息\", type=\"单线图\")))"
+  },
+  {
+    "text": "季节冻土层或季节干旱形成的高电阻率层的厚度较浅时，可将接地网埋在高电阻率层下0.2 m",
+    "fol": "Recommendation(action=埋设(actor=\"施工方\", object=\"接地网\", depth=\"高电阻率层下0.2m\"), condition=AND(PropertyLessThan(object=\"季节冻土层或季节干旱层\", property=\"厚度\", value=\"较浅\"), Property(object=\"季节冻土层或季节干旱层\", property=\"电阻率\", value=\"高\")))"
+  },
+  {
+    "text": "设备到货检查：产品应包装完好，规格符合设计要求，数量与运输清单一致。",
+    "fol": "AND(Obligation(subject=Party(\"检查人员\"), action=检查(actor=\"检查人员\", object=\"设备\", criteria=\"包装完好\")), Obligation(subject=Party(\"检查人员\"), action=检查(actor=\"检查人员\", object=\"设备规格\", criteria=\"符合设计要求\")), Obligation(subject=Party(\"检查人员\"), action=检查(actor=\"检查人员\", object=\"设备数量\", criteria=\"与运输清单一致\")))"
+  },
+  {
+    "text": "钢筋、水泥、砂、石、掺合料、水、外加剂及焊材、套筒、防腐蚀材料、地脚螺栓、声测管等质量证明文件、现场见证取样复检合格，报告齐全。",
+    "fol": "AND(Obligation(subject=Party(\"质检人员\"), action=合格(object=\"材料质量证明文件\", condition=\"齐全\")), Obligation(subject=Party(\"质检人员\"), action=合格(object=\"现场见证取样复检报告\", condition=\"合格\")))"
+  }
+]

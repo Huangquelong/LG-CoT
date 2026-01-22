@@ -1,0 +1,299 @@
+# Knowledge extraction configuration file
+
+# ============================================
+# PDF processing module configuration (pdf_extractor)
+# ============================================
+# Function: use MinerU CLI to convert PDF to markdown, then analyze and clean the text
+# Workflow: 1) PDF recognition -> 2) structure analysis & suggestion -> 3) user configuration -> 4) cleaning
+pdf_extractor:
+  # MinerU CLI configuration
+  mineru_mode: "txt"  # Processing mode: txt (pure text, faster) or auto (automatic mode with OCR)
+  mineru_timeout: 3600  # Timeout in seconds (default 1 hour; large files may need longer)
+
+  # Output configuration
+  output_dir: "output/markdown"  # PDF-to-markdown output directory
+  suggestion_dir: "output/pdf_analysis"  # Parameter suggestion output directory
+  # Output filename strategy: same as PDF filename (without extension), with .md extension added automatically
+
+
+# ============================================
+# Text cleaning module configuration (text_cleaner)
+# ============================================
+# Function: rule-based cleaning of PDF-extracted text; extract metadata and keep clause text
+text_cleaner:
+  # Sections to be extracted and stored as metadata (removed from main text and not used in later processing)
+  extract_sections:
+    - "目录"        # Table of contents section
+    - "前言"        # Preface section
+    - "引言"        # Introduction section
+    - "参考文献"    # References section
+
+  # Header levels to be removed from the final cleaned text
+  remove_headers:
+    - level: 1      # Level-1 headers (# Title)
+    - level: 2      # Level-2 headers (## Title)
+
+  # Clause number regex patterns (used to identify clause text to keep)
+  clause_patterns:
+    - '^\\d+\\.\\d+'            # Matches 1.1, 2.3, etc.
+    - '^\\d+\\.\\d+\\.\\d+'     # Matches 1.1.1, 2.3.4, etc.
+    - '^第[一二三四五六七八九十百]+条'  # Matches 第一条, 第二十条, etc.
+    - '^[A-Z]\\.\\d+'           # Matches A.1, B.2, etc.
+
+  output_dir: "output/clean_data"  # Output directory for cleaned data (Markdown + JSON)
+
+
+# ============================================
+# Schema dynamic construction module configuration (schema_builder)
+# ============================================
+# Function: dynamically generate domain predicate repository and FOL example repository
+# Step 0: randomly sample text and call a high-parameter LLM to analyze domain predicates and FOL examples
+schema_builder:
+  llm_provider: "SiliconFlow"  # LLM provider ("SiliconFlow" or "openai")
+  model: "Qwen/Qwen3-14B"  # Regular model name (for normal calls)
+  high_param_model: "Qwen/Qwen3-VL-235B-A22B-Instruct"  # High-parameter model name (for Step 0 initialization)
+  use_high_param: true  # Whether to use the high-parameter model in Step 0
+  temperature: 0.3  # LLM sampling temperature (0.0–1.0; higher is more random)
+  max_tokens: 4096  # Maximum number of tokens in LLM response
+  sample_text_count: 15  # Number of random samples for Step 0 (to initialize predicate repository)
+  output_dir: "output/schemas"  # Schema output directory (predicate and FOL repositories)
+
+  # Predefined logical connectives
+  logical_connectives:
+    - name: "AND"
+      symbol: "∧"
+      description: "Logical AND; all conditions must be satisfied"
+      examples: ["条件1 AND 条件2", "A ∧ B"]
+    - name: "OR"
+      symbol: "∨"
+      description: "Logical OR; any condition may be satisfied"
+      examples: ["条件1 OR 条件2", "A ∨ B"]
+    - name: "NOT"
+      symbol: "¬"
+      description: "Logical NOT; negation"
+      examples: ["NOT 条件", "¬A"]
+    - name: "IMPLIES"
+      symbol: "→"
+      description: "Implication; if ... then ..."
+      examples: ["IF 条件 THEN 结果", "A → B"]
+    - name: "IFF"
+      symbol: "↔"
+      description: "If and only if; bidirectional equivalence"
+      examples: ["A当且仅当B", "A ↔ B"]
+    - name: "XOR"
+      symbol: "⊕"
+      description: "Exclusive OR; exactly one is true"
+      examples: ["A XOR B", "A ⊕ B"]
+    - name: "FORALL"
+      symbol: "∀"
+      description: "Universal quantifier; for all"
+      examples: ["对所有x", "∀x"]
+    - name: "EXISTS"
+      symbol: "∃"
+      description: "Existential quantifier; there exists"
+      examples: ["存在x", "∃x"]
+
+  # Predefined modal operators (deontic logic)
+  modal_operators:
+    - name: "OBLIGATION"
+      symbol: "O"
+      description: "Obligation/should; must-perform action"
+      examples: ["应该", "义务", "应", "应当"]
+      patterns:
+        - subject_type: "主体"
+          action: "执行动作"
+          object_type: "客体"
+    - name: "REQUIREMENT"
+      symbol: "R"
+      description: "Requirement/must; mandatory requirement"
+      examples: ["要求", "必须", "需要", "需"]
+      patterns:
+        - subject_type: "主体"
+          action: "执行动作"
+          object_type: "客体"
+    - name: "PROHIBITION"
+      symbol: "P"
+      description: "Prohibition/must not; forbidden actions"
+      examples: ["禁止", "不得", "不应", "不允许"]
+      patterns:
+        - subject_type: "主体"
+          action: "禁止动作"
+          object_type: "客体"
+    - name: "PERMISSION"
+      symbol: "Perm"
+      description: "Permission/may; allowed actions"
+      examples: ["允许", "可以", "可", "准许"]
+      patterns:
+        - subject_type: "主体"
+          action: "允许动作"
+          object_type: "客体"
+
+
+# ============================================
+# lgcot-CoT knowledge extraction module configuration (knowledge_extractor)
+# ============================================
+# Function: execute Step 2 (FOL generation) and Step 6 (FOL-to-JSON mapping)
+# Uses logic-guided chain-of-thought for knowledge extraction
+knowledge_extractor:
+  llm_provider: "SiliconFlow"  # LLM provider ("SiliconFlow" or "openai")
+  model: "Qwen/Qwen3-14B"  # Model name used for extraction
+  temperature: 0.1  # Generation temperature (lower for stability; recommended 0.1–0.3)
+  max_tokens: 2048  # Maximum number of tokens in LLM response
+  max_retries: 3  # Maximum retry count when LLM calls fail
+  output_dir: "output/extraction_results"  # Extraction result output directory
+  template_path: "output_template.json"  # JSON template path used in Step 6
+
+  # Parallel extraction configuration
+  batch_workers: 10  # Maximum number of parallel threads per batch (tune according to API limits)
+  batch_chunk_size: 20  # Number of clauses per batch (usually equal or slightly larger than batch_workers)
+
+
+# ============================================
+# Bidirectional validation module configuration (validator)
+# ============================================
+# Function: execute Step 3 (check domain predicates) and Step 5 (FOL self-check)
+# Uses LLM to validate the quality of FOL conversions
+validator:
+  llm_provider: "SiliconFlow"  # LLM provider (independent context to avoid contamination)
+  model: "Qwen/Qwen3-14B"  # Model name used for validation
+  high_param_model: "Qwen/Qwen3-VL-235B-A22B-Instruct"  # High-parameter model for Step 3 predicate checking
+  use_high_param: true  # Whether Step 3 uses the high-parameter model
+  temperature: 0.1  # Generation temperature for Step 3 and Step 5 (recommended 0.0–0.2)
+  num_workers: 10  # Parallel validation threads (should match knowledge_extractor.batch_workers)
+
+  # Validation failure handling configuration
+  on_failure:
+    action: "retry"  # Action on failure: retry / skip / manual
+    include_error_feedback: true  # Whether to include feedback in retry prompts
+    max_retries: 3  # Maximum retries before sending to review repository
+
+  # Review repository configuration (store clauses whose validation failed)
+  review:
+    output_dir: "output/review"  # Review repository output directory
+    auto_process: true  # Whether to auto-process review repository after all data is processed
+
+  output_dir: "output/validation_logs"  # Validation log output directory
+
+
+# ============================================
+# Knowledge graph construction module configuration (knowledge_graph)
+# ============================================
+# Function: construct a Neo4j knowledge graph from extraction results
+knowledge_graph:
+  neo4j:
+    uri: "bolt://localhost:7687"  # Neo4j connection URI (browser at http://localhost:7474/browser/)
+    username: "neo4j"  # Neo4j username
+    password: "your_password_here"  # Neo4j password (replace with real password)
+    database: "neo4j"  # Database name
+
+  max_connection_lifetime: 3600  # Maximum connection lifetime in seconds (3600 = 1 hour)
+  max_connection_pool_size: 50  # Maximum connection pool size
+  auto_construct: false  # Whether to automatically build KG after extraction (false = manual)
+
+
+# ============================================
+# LLM API configuration (llm_api)
+# ============================================
+# Function: configure LLM API keys and base URLs
+# Note: replace API keys with your real keys; do not commit real keys to public repositories
+llm_api:
+  SiliconFlow:
+    api_key: "your_siliconflow_api_key_here"  # SiliconFlow API key (replace with real key)
+    api_base: "https://api.siliconflow.cn/v1"  # API base URL
+  openai:
+    api_key: "your-openai-api-key"  # OpenAI API key (replace with real key)
+    api_base: "https://api.openai.com/v1"  # OpenAI API base URL
+
+
+# ============================================
+# Logging configuration (logging)
+# ============================================
+# Function: configure logging format, level, and output
+logging:
+  level: "INFO"  # Log level: DEBUG (verbose), INFO (normal), WARNING, ERROR
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} - {message}"  # Log format
+  output_dir: "output/logs"  # Log file output directory
+  rotation: "500 MB"  # Log rotation size (rotate when file exceeds this size)
+  retention: "30 days"  # Log retention (logs older than this will be removed)
+
+
+# ============================================
+# Main pipeline configuration (pipeline)
+# ============================================
+# Function: configure main pipeline input/output and checkpoints
+pipeline:
+  input_pdf_dir: "data"  # Input PDF directory
+  checkpoint_dir: "output/checkpoints"  # Checkpoint directory for intermediate state
+  extract_data_dir: "output/extract_data"  # Knowledge extraction result directory (for KG construction)
+
+
+# ============================================
+# Word2Vec configuration (word2vec)
+# ============================================
+# Function: configure Word2Vec model used for semantic retrieval
+word2vec:
+  vector_size: 256  # Vector dimension (recommended 256)
+  window: 5  # Context window size (recommended 5)
+  min_count: 1  # Minimum word frequency (words below this count are ignored)
+  workers: 4  # Parallel worker threads for training (set according to CPU cores)
+  sg: 0  # Training algorithm (0 = CBOW, 1 = Skip-gram; recommended 0)
+
+
+# ============================================
+# Baseline experiment configuration (baseline_experiment)
+# ============================================
+# Function: baseline experiment pipeline implementing three extraction methods
+baseline_experiment:
+  baseline:
+    model: "Qwen/Qwen3-14B"  # Model used for baseline methods
+    output_dir: "Experiment_result"  # Root output directory
+    input_file: "Temporary_tool/silver_standard_dataset_updated.json"  # Input dataset path
+    max_workers: 20  # Maximum parallel worker threads
+
+    rate_limiter:
+      rpm: 2000  # Requests per minute
+      tpm: 80000  # Tokens per minute
+      max_sleep: 5.0  # Maximum sleep time per wait in seconds
+
+    llm_params:
+      temperature: 0.3  # LLM generation temperature
+      max_tokens: 2048  # Maximum token count
+
+    word2vec:
+      vector_size: 100  # Vector dimension
+      window: 5  # Context window size
+      min_count: 1  # Minimum word frequency
+      workers: 4  # Parallel worker threads
+      sg: 0  # Training algorithm (0 = CBOW, 1 = Skip-gram)
+
+
+# ============================================
+# RAG evaluation configuration (rag_evaluation)
+# ============================================
+# Function: configuration for the RAG evaluation system
+rag_evaluation:
+  default_model: "moonshotai/Kimi-K2-Thinking"  # Default model for RAG evaluation
+
+
+# ============================================
+# LLM expert evaluation configuration (evaluation.llm_expert)
+# ============================================
+# Function: configuration for the LLM expert evaluation module
+evaluation:
+  llm_expert:
+    model: "deepseek-ai/DeepSeek-V3"  # Judger model name
+    output_dir: "Evaluation/evaluation_results"  # Output directory
+    silver_standard_path: "Temporary_tool/silver_standard_dataset_updated.json"  # Silver-standard dataset path
+
+    rate_limiter:
+      rpm: 2000  # Requests per minute
+      tpm: 80000  # Tokens per minute
+      max_sleep: 5.0  # Maximum sleep time per wait in seconds
+
+
+# ============================================
+# Other global configuration
+# ============================================
+global_schema_path: "global_schema.json"  # Global schema file path (for sharing predicates across documents)
+output_dir: "output"  # Root output directory (base for all module outputs)
+
