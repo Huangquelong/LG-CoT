@@ -273,29 +273,6 @@ Logs are stored in:
 - Baseline experiments: `Baseline/Validation/baseline_experiment.log`
 - Evaluation: `Evaluation/llm_expert_evaluation.log`
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-[Specify your license here]
-
-## Citation
-
-If you use this system in your research, please cite:
-
-```bibtex
-@software{kgc_system,
-  title = {Knowledge Graph Construction System},
-  author = {[Your Name]},
-  year = {2024},
-  url = {[Repository URL]}
-}
-```
 
 ## Acknowledgments
 
@@ -305,10 +282,8 @@ If you use this system in your research, please cite:
 
 ---
 
-## 开源声明 / Open Source Disclaimer
+## Open Source Disclaimer
 
-本项目仅供**科研与学习**使用（For **research and learning purposes only**）。  
-
-如有**商业用途**需求，请提前联系作者获取授权。未经授权不得将本项目用于任何商业目的。  
-
+For **research and learning purposes only**。  
 **For commercial use**, please contact the author for permission. Unauthorized commercial use is prohibited.
+
