@@ -30,7 +30,7 @@ This system implements a complete pipeline for extracting structured knowledge f
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Huangquelong/LG-CoT.git
 cd KGC
 ```
 
@@ -338,6 +338,7 @@ Logs are stored in:
 如有商业用途需求，请提前联系作者获取授权。未经授权不得将本项目用于任何商业目的。
 
 For commercial use, please contact the author for permission. Unauthorized commercial use is prohibited.
+
 
 
 
