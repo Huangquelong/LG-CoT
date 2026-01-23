@@ -9,11 +9,11 @@ This system implements a complete pipeline for extracting structured knowledge f
 
 ## ✨ Highlights
 
-**端到端流水线**：PDF 解析 → 清洗 → Schema 构建 → FOL 抽取 → 校验 → JSON 输出 →（可选）Neo4j 入库  
-**LG-CoT 抽取**：面向法规、标准、技术规范等文本，输出可追溯的逻辑表达  
-**多基线对比**：StandCoT / Random few-shot / Semantic few-shot  
-**评估与下游**：支持 LLM Expert Evaluation 与 RAG（NaiveRAG vs GraphRAG）对比  
-**可配置**：所有参数统一在 `config.yaml`
+**End-to-end Pipeline**: PDF Parsing → Cleaning → Schema Construction → FOL Extraction → Validation → JSON Output → (Optional) Neo4j Ingestion
+**LG-CoT Extraction**: For legal regulations, standards, technical specifications, etc., output traceable logical expressions
+**Multi-baseline Comparison**: StandCoT / Random Few-shot / Semantic Few-shot
+**Evaluation and Downstream**: Supports LLM Expert Evaluation and RAG (NaiveRAG vs GraphRAG) comparison
+**Configurable**: All parameters are unified in `config.yaml`
 
 ## Installation
 
@@ -338,6 +338,7 @@ Logs are stored in:
 如有商业用途需求，请提前联系作者获取授权。未经授权不得将本项目用于任何商业目的。
 
 For commercial use, please contact the author for permission. Unauthorized commercial use is prohibited.
+
 
 
 
