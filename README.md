@@ -26,7 +26,7 @@ This system implements a complete pipeline for extracting structured knowledge f
 - Python 3.8+
 - Neo4j (optional, for knowledge graph features)
 - CUDA-capable GPU (recommended for MinerU)
-- (建议) Linux / WSL 环境运行 MinerU 与 GPU 推理更稳定
+- Running MinerU in the Linux/WSL environment is more stable for GPU inference.
 
 
 
@@ -50,7 +50,7 @@ llm_api:
     api_key: "your_api_key_here"
     api_base: "https://api.siliconflow.cn/v1"
 
-Important: Replace all placeholder API keys in config.yaml with your actual keys before running.
+#Important: Replace all placeholder API keys in config.yaml with your actual keys before running.
 ```
 
 ## Configuration
@@ -342,6 +342,7 @@ Logs are stored in:
 如有商业用途需求，请提前联系作者获取授权。未经授权不得将本项目用于任何商业目的。
 
 For commercial use, please contact the author for permission. Unauthorized commercial use is prohibited.
+
 
 
 
