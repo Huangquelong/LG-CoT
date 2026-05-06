@@ -130,7 +130,7 @@ schema_builder:
 
 
 # ============================================
-# lgcot-CoT knowledge extraction module configuration (knowledge_extractor)
+# lgcot knowledge extraction module configuration (knowledge_extractor)
 # ============================================
 # Function: execute Step 2 (FOL generation) and Step 6 (FOL-to-JSON mapping)
 # Uses logic-guided chain-of-thought for knowledge extraction
