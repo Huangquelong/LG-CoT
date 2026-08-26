@@ -9,19 +9,19 @@ This system implements a complete pipeline for extracting structured knowledge f
 ## Visual Overview
 
 <p align="center">
-  <img src="docs/images/fig-1.png" alt="LG-CoT end-to-end framework" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/Huangquelong/LG-CoT@main/docs/images/fig-1.png" alt="LG-CoT end-to-end framework" width="100%">
 </p>
 
 <p align="center"><em>Figure 1. End-to-end framework covering document preprocessing, logic-guided knowledge extraction, validation, JSON mapping, and knowledge graph construction.</em></p>
 
 <p align="center">
-  <img src="docs/images/fig-2.png" alt="LG-CoT model workflow" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/Huangquelong/LG-CoT@main/docs/images/fig-2.png" alt="LG-CoT model workflow" width="100%">
 </p>
 
 <p align="center"><em>Figure 2. Model workflow for ontology evolution, logical formalization, logical verification, and structured output generation.</em></p>
 
 <p align="center">
-  <img src="docs/images/fig-3.png" alt="LG-CoT evaluation results" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/Huangquelong/LG-CoT@main/docs/images/fig-3.png" alt="LG-CoT evaluation results" width="100%">
 </p>
 
 <p align="center"><em>Figure 3. Score comparison among LG-CoT, Random Few-shot, Standard CoT, and Semantic Few-shot methods.</em></p>
